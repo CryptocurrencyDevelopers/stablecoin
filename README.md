@@ -9,6 +9,9 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/stablecoin)](https://CRAN.R-project.org/package=stablecoin)
+[![Codecov test
+coverage](https://codecov.io/gh/galen211/stablecoin/branch/master/graph/badge.svg)](https://codecov.io/gh/galen211/stablecoin?branch=master)
+[![R-CMD-check](https://github.com/galen211/stablecoin/workflows/R-CMD-check/badge.svg)](https://github.com/galen211/stablecoin/actions)
 <!-- badges: end -->
 
 The goal of stablecoin is to …
@@ -57,3 +60,10 @@ You can also embed plots, for example:
 
 In that case, don’t forget to commit and push the resulting figure
 files, so they display on GitHub and CRAN.
+
+## Code of Conduct
+
+Please note that the stablecoin project is released with a [Contributor
+Code of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
