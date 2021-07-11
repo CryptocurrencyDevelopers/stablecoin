@@ -96,7 +96,67 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://galen211.github.io/stablecoin">stablecoin</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://galen211.github.io/stablecoin">stablecoin</a></span><span class="op">)</span>
+<span class="co">#&gt; Loading required package: tidyverse</span>
+<span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</span>
+<span class="co">#&gt; ✔ ggplot2 3.3.5     ✔ purrr   0.3.4</span>
+<span class="co">#&gt; ✔ tibble  3.1.2     ✔ dplyr   1.0.7</span>
+<span class="co">#&gt; ✔ tidyr   1.1.3     ✔ stringr 1.4.0</span>
+<span class="co">#&gt; ✔ readr   1.4.0     ✔ forcats 0.5.1</span>
+<span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
+<span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
+<div id="historical-metrics" class="section level3">
+<h3 class="hasAnchor">
+<a href="#historical-metrics" class="anchor"></a>Historical Metrics</h3>
+<p>Fetch and store the historical supply of USDC on Ethereum in a tibble data frame. Note that this function support Coin Metrics’ definitions for metrics. For more information on Coin Metrics’ API see, <a href="https://docs.coinmetrics.io/api/v4" class="uri">https://docs.coinmetrics.io/api/v4</a></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fetch_historical_ethereum.html">fetch_historical_ethereum</a></span><span class="op">(</span>metric <span class="op">=</span> <span class="st">"CapMrktCurUSD"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 x 4</span>
+<span class="co">#&gt;   date              value measurement   blockchain</span>
+<span class="co">#&gt;   &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 2021-07-05 24691353755. CapMrktCurUSD Ethereum  </span>
+<span class="co">#&gt; 2 2021-07-06 24849279966. CapMrktCurUSD Ethereum  </span>
+<span class="co">#&gt; 3 2021-07-07 24960290162. CapMrktCurUSD Ethereum  </span>
+<span class="co">#&gt; 4 2021-07-08 25101936817. CapMrktCurUSD Ethereum  </span>
+<span class="co">#&gt; 5 2021-07-09 25256597252. CapMrktCurUSD Ethereum  </span>
+<span class="co">#&gt; 6 2021-07-10 25263537872. CapMrktCurUSD Ethereum</span></code></pre></div>
+<p>Fetch and store the amount of daily active USDC supply on Ethereum in a tibble data frame. Note that this function uses the Coin Metrics API field <code>SplyAct1d</code>. Other metrics can also be substituted.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fetch_historical_ethereum.html">fetch_historical_ethereum</a></span><span class="op">(</span>metric <span class="op">=</span> <span class="st">"SplyAct1d"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 x 4</span>
+<span class="co">#&gt;   date              value measurement blockchain</span>
+<span class="co">#&gt;   &lt;date&gt;            &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     </span>
+<span class="co">#&gt; 1 2021-07-05 11592048929. SplyAct1d   Ethereum  </span>
+<span class="co">#&gt; 2 2021-07-06 12065676975. SplyAct1d   Ethereum  </span>
+<span class="co">#&gt; 3 2021-07-07  8927407815. SplyAct1d   Ethereum  </span>
+<span class="co">#&gt; 4 2021-07-08 12032742331. SplyAct1d   Ethereum  </span>
+<span class="co">#&gt; 5 2021-07-09 12192341749. SplyAct1d   Ethereum  </span>
+<span class="co">#&gt; 6 2021-07-10  8962888003. SplyAct1d   Ethereum</span></code></pre></div>
+<div id="coin-metrics-fields" class="section level4">
+<h4 class="hasAnchor">
+<a href="#coin-metrics-fields" class="anchor"></a>Coin Metrics fields</h4>
+<p>An internal dataset holds the fields which are currently available through the Coin Metrics API. To view the dataset, simply type <code>metrics</code>. The example below shows some of the supported fields:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">metrics</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">description</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">5</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 5 x 2</span>
+<span class="co">#&gt;   id               description                                                  </span>
+<span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;                                                        </span>
+<span class="co">#&gt; 1 SplyAdrBalUSD1   The sum of all native units being held in addresses whose ba…</span>
+<span class="co">#&gt; 2 SplyAct5yr       The sum of unique native units that transacted at least once…</span>
+<span class="co">#&gt; 3 IssContUSD       The sum USD value of new native units issued that interval. …</span>
+<span class="co">#&gt; 4 GasLmtTx         The sum gas limit of all transactions that interval.         </span>
+<span class="co">#&gt; 5 SplyMiner0HopAl… The sum of the balances of all mining entities in USD. A min…</span></code></pre></div>
+</div>
+</div>
+<div id="plotting" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plotting" class="anchor"></a>Plotting</h3>
+<p>Plot the current supply of USDC on each supported blockchain <img src="getting_started_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>Plot the current supply of USDC on Ethereum <img src="getting_started_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -108,7 +168,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by First Last.</p>
+  <p>Developed by Galen Simmons.</p>
 </div>
 
 <div class="pkgdown">

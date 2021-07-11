@@ -4,6 +4,42 @@
     <loc>https://galen211.github.io/stablecoin/index.html</loc>
   </url>
   <url>
+    <loc>https://galen211.github.io/stablecoin/reference/chart_current_supply_usdc.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/chart_historical_supply_usdc.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/coinmetrics_supported_metrics.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_historical_ethereum.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_supply_algorand.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_supply_ethereum.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_supply_solana.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_supply_stellar.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_supply_tron.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/fetch_supply_usdc.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/metrics.html</loc>
+  </url>
+  <url>
+    <loc>https://galen211.github.io/stablecoin/reference/print_all_chains.html</loc>
+  </url>
+  <url>
     <loc>https://galen211.github.io/stablecoin/articles/api_keys.html</loc>
   </url>
   <url>
