@@ -1,0 +1,16 @@
+query ($network: EthereumNetwork!, $address: String!, $limit: Int!, $offset: Int!, $from: ISO8601DateTime, $till: ISO8601DateTime) {
+  ethereum(network: $network) {
+    smartContractCalls(options: {desc: "count", limit: $limit, offset: $offset}, date: {since: $from, till: $till}, smartContractAddress: {is: $address}) {
+      address: caller {
+        address
+        annotation
+        __typename
+      }
+      max_date: maximum(of: date)
+      count
+      gasValue(calculate: average)
+      __typename
+    }
+    __typename
+  }
+}

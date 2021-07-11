@@ -1,0 +1,17 @@
+query (
+  $network: EthereumNetwork!,
+  $address: String!
+) {
+  ethereum(network: $network) {
+    address(address: {is: $address}) {
+      balances {
+        currency {
+          address
+          symbol
+          tokenType
+        }
+        value
+      }
+    }
+  }
+}
