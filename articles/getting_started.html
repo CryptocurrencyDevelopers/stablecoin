@@ -131,7 +131,7 @@
 <a href="#coin-metrics-fields" class="anchor"></a>Coin Metrics fields</h4>
 <p>An internal dataset holds the fields which are currently available through the Coin Metrics API. To view the dataset, simply type <code>metrics</code>. The example below shows some of the supported fields:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">metrics</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">description</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">5</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">metrics</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">id</span>, <span class="va">description</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">slice_sample</span><span class="op">(</span>n<span class="op">=</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 2</span>
 <span class="co">#&gt;   id               description                                                                                          </span>
 <span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;                                                                                                </span>
