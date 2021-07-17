@@ -7,47 +7,78 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
-```{r setup}
+
+
+```r
 library(stablecoin)
 ```
 
 ### Historical Metrics
 
 Fetch and store the historical supply of USDC on Ethereum in a tibble data frame.  Note that this function support Coin Metrics' definitions for metrics.  For more information on Coin Metrics' API see, https://docs.coinmetrics.io/api/v4
-```{r}
+
+```r
 df <- fetch_historical_ethereum(metric = "CapMrktCurUSD")
 tail(df)
+#> # A tibble: 6 x 4
+#>   date              value measurement   blockchain
+#>   <date>            <dbl> <chr>         <chr>     
+#> 1 2021-07-05 24691353755. CapMrktCurUSD Ethereum  
+#> 2 2021-07-06 24849279966. CapMrktCurUSD Ethereum  
+#> 3 2021-07-07 24960290162. CapMrktCurUSD Ethereum  
+#> 4 2021-07-08 25101936817. CapMrktCurUSD Ethereum  
+#> 5 2021-07-09 25256597252. CapMrktCurUSD Ethereum  
+#> 6 2021-07-10 25263537872. CapMrktCurUSD Ethereum
 ```
 
 Fetch and store the amount of daily active USDC supply on Ethereum in a tibble data frame.  Note that this function uses the Coin Metrics API field `SplyAct1d`.  Other metrics can also be substituted.
-```{r}
+
+```r
 df <- fetch_historical_ethereum(metric = "SplyAct1d")
 tail(df)
+#> # A tibble: 6 x 4
+#>   date              value measurement blockchain
+#>   <date>            <dbl> <chr>       <chr>     
+#> 1 2021-07-05 11592048929. SplyAct1d   Ethereum  
+#> 2 2021-07-06 12065676975. SplyAct1d   Ethereum  
+#> 3 2021-07-07  8927407815. SplyAct1d   Ethereum  
+#> 4 2021-07-08 12032742331. SplyAct1d   Ethereum  
+#> 5 2021-07-09 12192341749. SplyAct1d   Ethereum  
+#> 6 2021-07-10  8962888003. SplyAct1d   Ethereum
 ```
 
 #### Coin Metrics fields
 An internal dataset holds the fields which are currently available through the Coin Metrics API.  To view the dataset, simply type `metrics`.  The example below shows some of the supported fields:
-```{r}
+
+```r
 metrics %>% select(id, description) %>% slice_sample(n=5)
+#> # A tibble: 5 x 2
+#>   id               description                                                                                          
+#>   <chr>            <chr>                                                                                                
+#> 1 SER              The ratio of supply held by addresses with less than one ten-millionth of the current supply of nati…
+#> 2 BlkSizeMeanByte  The mean size (in bytes) of all blocks created that day.                                             
+#> 3 SplyAdrBalNtv100 The sum of all native units being held in addresses whose balance was 100 native units or greater at…
+#> 4 SplyAdrBalNtv0.… The sum of all native units being held in addresses whose balance was 0.001 native unit or greater a…
+#> 5 IssTotUSD        The sum USD value of all new native units issued that interval.
 ```
 
 ### Plotting
 
 Plot the current supply of USDC on each supported blockchain
-```{r echo=FALSE}
+
+```r
 chart_current_supply_usdc()
 ```
 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+
 
 Plot the current supply of USDC on Ethereum
-```{r echo=FALSE}
+
+```r
 chart_historical_supply_usdc()
 ```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
