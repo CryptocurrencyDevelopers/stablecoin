@@ -35,7 +35,9 @@ Imports:
     lubridate,
     rlang,
     ggthemes,
-    ggplot2
+    ggplot2,
+    magrittr,
+    tibble
 Language: en-US
 Depends: 
     tidyverse,

@@ -4,7 +4,10 @@
 #' Queries the `CoinMetrics` API to retrieve historical USDC metrics
 #'
 #' @export
-#'
+#' @importFrom rlang .data
+#' @importFrom httr GET http_error content
+#' @importFrom jsonlite fromJSON
+#' @importFrom lubridate as_date
 #' @param metric (character) A valid CoinMetrics asset metric
 #' @return a dataframe with the historical USDC metrics (see: https://docs.coinmetrics.io/api/v4#operation/getCatalogAllMetrics)
 #' @examples
@@ -19,23 +22,24 @@ fetch_historical_ethereum <- function(metric = "CapMrktCurUSD") {
     metrics = metric,
     page_size = 10000
   )
-  r <- httr::GET("https://community-api.coinmetrics.io/v4/timeseries/asset-metrics", query = params)
-  stopifnot(httr::status_code(r) == 200)
-  t <- httr::content(r, as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON() %>%
+  r <- GET("https://community-api.coinmetrics.io/v4/timeseries/asset-metrics", query = params)
+  if(http_error(r)){ 	warning("Coin Metrics webservice is unable to retrieve asset metrics") }
+
+  t <- content(r, as = "text", encoding = "UTF-8") %>%
+    fromJSON() %>%
     .$data %>%
-    dplyr::rename(
+    rename(
       date = `time`,
       value = metric
     ) %>%
-    dplyr::select(-asset) %>%
-    dplyr::mutate(
+    select(-asset) %>%
+    mutate(
       date = lubridate::as_date(date),
       measurement = metric,
       value = as.numeric(value),
       blockchain = "Ethereum"
     ) %>%
-    dplyr::as_tibble()
+    as_tibble()
 
   return(t)
 }

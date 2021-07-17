@@ -33,13 +33,13 @@ install.packages("stablecoin")
 ```
 
 Load the package with:
-```{r}
-library(usdc)
+```{r, echo=FALSE}
+library(stablecoin)
 ```
 
 ## Basic Usage
 Fetch the current circulating supply in a tibble data frame
-```r
+```{r, echo=FALSE}
 fetch_supply_usdc()
 ```
 

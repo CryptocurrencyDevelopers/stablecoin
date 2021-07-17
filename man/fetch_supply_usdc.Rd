@@ -7,7 +7,7 @@
 fetch_supply_usdc()
 }
 \value{
-a tibble containing the current circulating amount of USDC
+a \link[tibble:tibble-package]{tibble} a tibble containing the current circulating amount of USDC
 }
 \description{
 Queries the Algorand, Ethereum, Solana, and Stellar blockchains to retrieve the token balances of USDC on each blockchain
