@@ -1,0 +1,68 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+UseThis package has good example of pkgdown documentation
+https://usethis.r-lib.org/reference/index.html
+
+The github repository _pkgdown.yml has the tricks to create good docs
+https://github.com/r-lib/usethis/blob/a40714fba2fa9adf45d3e12f73ffe941eb799423/_pkgdown.yml
+
+```{r}
+target_network <- 'Ethereum'
+target_token <- 'USDC'
+
+result <- tb %>%
+  filter(network == target_network & token == target_token) %>%
+  pull(token_id)
+
+if(rlang::is_empty(result)) {
+  stop('Token is either not found or supported. Check for typos.')
+}
+
+result
+```
+
+```{r}
+start_time = '2020-01-01'
+end_time = '2021-07-14'
+
+supply <- tokens %>%
+  filter(historical == TRUE) %>%
+  mutate(supply = purrr::map2(network, token, historical_supply, start_time, end_time)) %>%
+  select(supply) %>%
+  unnest(cols = c(supply)) %>%
+  arrange(network, token, date)
+```
+
+
+```{r}
+df <- current_supply_all()
+```
+
+
+```{r}
+tb <- historical_supply_all(start_time = '2020-01-01', end_time = '2021-07-14')
+```
+
+```{r}
+library(furrr)
+
+result <- tokens %>%
+    mutate(current_supply = purrr::map2_dbl(network, token, current_supply)) %>%
+    arrange(token, network)
+```
+
+
+```{r}
+library(ggplot2)
+
+tb %>%
+  ggplot(aes(x = network, y = supply, fill = token)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(labels = dollar_format(scale = 1e-9, accuracy = 1)) +
+  xlab("\nBlockchain") +
+  ylab("USD Billions\n")
+```
+

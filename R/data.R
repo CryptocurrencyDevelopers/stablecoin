@@ -5,5 +5,11 @@
 #' for understanding the meaning of the metric.
 #'
 #' @docType package
-#' @name metrics
+#' @name coinmetrics
+NULL
+
+#' Supported tokens and blockchain networks available through this package
+#'
+#' @docType package
+#' @name tokens
 NULL

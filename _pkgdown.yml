@@ -1,1 +1,58 @@
 url: https://galen211.github.io/stablecoin
+
+authors:
+   Galen Simmons:
+     href: https://twitter.com/galen211
+
+# template:
+#   params:
+#     docsearch:
+#       api_key: f67d4c46004acc8326e8d95f296a680e
+#       index_name: usethis
+#     ganalytics: UA-115082821-1
+
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Setup
+    href: articles/getting_started.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: Getting Started
+      href: articles/getting_started.html
+    - text: Analytics Primer
+      href: articles/analytics_primer.html
+    - text: Charting
+      href: articles/charting.html
+    - text: Managing API keys
+      href: articles/api_keys.html
+
+reference:
+  - title: Current Supply
+    desc: >
+      Query the current supply of stablecoins on supported blockchains
+    contents:
+    - current_supply
+  - title: Historical Supply
+    desc: >
+      Query the historical supply of stablecoins on supported blockchains
+    contents:
+    - fetch_historical_ethereum
+    - coinmetrics_supported_metrics
+  - title: Analytics
+    desc: >
+      Query the historical supply of stablecoins on supported blockchains
+    contents:
+    - tokens
+    - coinmetrics_asset_metrics
+    - coinmetrics
+  - title: Charts
+    desc: >
+      Plot commonly used stablecoin charts
+    contents:
+    - plot_current_supply
+    - plot_historical_supply

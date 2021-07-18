@@ -7,78 +7,34 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
-
-
-```r
+```{r setup, include = FALSE, message=FALSE, warning=FALSE}
 library(stablecoin)
+library(scales)
 ```
 
-### Historical Metrics
+## Current Supply
+Utilize the `tokens` data object to see a current list of the tokens and networks that are supported by this package.  The `historical` boolean indicates whether historical queries are supported.
 
-Fetch and store the historical supply of USDC on Ethereum in a tibble data frame.  Note that this function support Coin Metrics' definitions for metrics.  For more information on Coin Metrics' API see, https://docs.coinmetrics.io/api/v4
-
-```r
-df <- fetch_historical_ethereum(metric = "CapMrktCurUSD")
-tail(df)
-#> # A tibble: 6 x 4
-#>   date              value measurement   blockchain
-#>   <date>            <dbl> <chr>         <chr>     
-#> 1 2021-07-05 24691353755. CapMrktCurUSD Ethereum  
-#> 2 2021-07-06 24849279966. CapMrktCurUSD Ethereum  
-#> 3 2021-07-07 24960290162. CapMrktCurUSD Ethereum  
-#> 4 2021-07-08 25101936817. CapMrktCurUSD Ethereum  
-#> 5 2021-07-09 25256597252. CapMrktCurUSD Ethereum  
-#> 6 2021-07-10 25263537872. CapMrktCurUSD Ethereum
+```{r, echo = FALSE, results='asis'}
+tokens %>%
+  select(network, token, historical, token_id) %>%
+  knitr::kable(., caption = "Supported Stablecoins")
 ```
 
-Fetch and store the amount of daily active USDC supply on Ethereum in a tibble data frame.  Note that this function uses the Coin Metrics API field `SplyAct1d`.  Other metrics can also be substituted.
-
-```r
-df <- fetch_historical_ethereum(metric = "SplyAct1d")
-tail(df)
-#> # A tibble: 6 x 4
-#>   date              value measurement blockchain
-#>   <date>            <dbl> <chr>       <chr>     
-#> 1 2021-07-05 11592048929. SplyAct1d   Ethereum  
-#> 2 2021-07-06 12065676975. SplyAct1d   Ethereum  
-#> 3 2021-07-07  8927407815. SplyAct1d   Ethereum  
-#> 4 2021-07-08 12032742331. SplyAct1d   Ethereum  
-#> 5 2021-07-09 12192341749. SplyAct1d   Ethereum  
-#> 6 2021-07-10  8962888003. SplyAct1d   Ethereum
+To query the supply of USDC on a particular blockchain, utilize the `current_supply()` function  Fetching the Ethereum USDC circulation is shown below:
+```{r}
+current_supply(network = "Ethereum", token = "USDC")
 ```
 
-#### Coin Metrics fields
-An internal dataset holds the fields which are currently available through the Coin Metrics API.  To view the dataset, simply type `metrics`.  The example below shows some of the supported fields:
-
-```r
-metrics %>% select(id, description) %>% slice_sample(n=5)
-#> # A tibble: 5 x 2
-#>   id               description                                                                                          
-#>   <chr>            <chr>                                                                                                
-#> 1 SER              The ratio of supply held by addresses with less than one ten-millionth of the current supply of nati…
-#> 2 BlkSizeMeanByte  The mean size (in bytes) of all blocks created that day.                                             
-#> 3 SplyAdrBalNtv100 The sum of all native units being held in addresses whose balance was 100 native units or greater at…
-#> 4 SplyAdrBalNtv0.… The sum of all native units being held in addresses whose balance was 0.001 native unit or greater a…
-#> 5 IssTotUSD        The sum USD value of all new native units issued that interval.
+### Multiple Blockchains
+To query the balance of a stablecoin on supported blockchains, simply utilize the `current_supply_all()` functions.  Fetching the total supply of USDC and USDT is shown below:
+```{r}
+current_supply_all(selected_tokens = c("USDC", "USDT"))
 ```
-
-### Plotting
-
-Plot the current supply of USDC on each supported blockchain
-
-```r
-chart_current_supply_usdc()
-```
-
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
-
-
-Plot the current supply of USDC on Ethereum
-
-```r
-chart_historical_supply_usdc()
-```
-
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
-

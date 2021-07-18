@@ -1,0 +1,35 @@
+---
+title: "Built-In Charting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Built-in Charting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(stablecoin)
+```
+
+## Charts Types
+Current built-in charts are limited to current and historical stablecoin supply.  More advanced charts will be added in future releases.
+
+### Supply
+Plot the current stablecoin supply on each supported blockchain using the `plot_current_supply()` functions:
+```{r}
+plot_current_supply("USDC")
+```
+
+
+Plot the historical stablecoin supply on each supported blockchain using the `*_plot_historical_supply()` functions:
+```{r}
+#plot_historical_supply(token = "USDC")
+```
+

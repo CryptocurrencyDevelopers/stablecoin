@@ -1,5 +1,5 @@
 Package: stablecoin
-Title: Stablecoin circulation and transactional data
+Title: Stablecoin circulation data and analytics on multiple blockchains
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Galen",
@@ -7,13 +7,13 @@ Authors@R:
            role = c("aut", "cre"),
            email = "galen.simmons@gmail.com",
            comment = c(ORCID = "0000-0002-4336-3181"))
-Description: Client for data sources to track current and historical 'usdc' circulation
-    on blockchains officially supported by the Centre Consortium (Algorand, Ethereum,
-    Solana, Stellar, TRON).  USDC is a dollar-backed stablecoin issued by the Centre Consortium.  
-    This package utilizes block explorer APIs to retrieve current circulation data and the
-    Coin Metrics API to retrieve historical metrics.  Additional utility functions are
-    provided for charting and looking up the metrics definitions for Coin Metrics V4 API, 
-    which is documented at <https://docs.coinmetrics.io/api/v4>.
+Description: Client for accessing and aggregating information on multiple 
+    blockchains for stablecoin data and analytics.  This package uses blockchain
+    explorer web services as well as analytics APIs to simplify the collection 
+    of data on stablecoin circulation of USDC and USDT, currently the two
+    stablecoins with the largest outstanding circulation.  Also included are 
+    data manipulation and charting helper functions for common analytical 
+    approaches to measuring and comparing stablecoin usage over time.
 License: MIT + file LICENSE
 Suggests: 
     testthat (>= 3.0.0),
@@ -37,7 +37,9 @@ Imports:
     ggthemes,
     ggplot2,
     magrittr,
-    tibble
+    tibble,
+    memoise,
+    keyring
 Language: en-US
 Depends: 
     tidyverse,

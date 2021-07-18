@@ -1,0 +1,66 @@
+---
+title: "Analytics Primer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Primer on analytics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(stablecoin)
+```
+
+## Analytics
+Support for analytical queries is evolving.  Currently, this package supports some queries available through `Coin Metrics` and `BitQuery`.  Ethereum has the most robust services indexing smart contract events, and therefore most of the currently available functionality is specific to Ethereum.
+
+### Historical Supply
+Historical supply is currently limited to Ethereum tokens.  To query the historical supply of a stablecoin on Ethereum, utilize the `historical_supply()` function.
+```{r}
+df <- historical_supply(network = "Ethereum", 
+                        token = "USDC", 
+                        start_time = '2020-01-01', 
+                        end_time = '2021-07-14')
+tail(df)
+```
+
+### Algorand Analytics
+Not yet available.  If you call the `historical_supply` function, you will get an error message.
+
+### Ethereum Analytics
+Ethereum analytics currently supports queries through Coin Metrics and BitQuery
+
+#### Coin Metrics
+Queries against the Coin Metrics community API are available through the `coinmetrics_query()` function interface.  For more information about the field definitions available through Coin Metrics, see their [documentation](https://docs.coinmetrics.io/api/v4)
+
+Fetch and store the amount of daily active USDC supply on Ethereum in a tibble data frame.  Note that this function uses the Coin Metrics API field `SplyAct1d`.  Other metrics can also be substituted.
+```{r}
+df <- coinmetrics_asset_metrics(
+                                token = "USDC", 
+                                metric = "SplyAct1d", 
+                                start_time = '2020-01-01', 
+                                end_time = '2020-07-14')
+
+tail(df)
+```
+
+An internal dataset holds the fields which are currently available through the Coin Metrics API.  To view the dataset, simply type `coinmetrics`.  The example below shows some of the supported fields:
+```{r}
+coinmetrics %>% select(id, description) %>% tail(n=5)
+```
+
+### Solana Analytics
+Not yet available.  If you call the `historical_supply` function, you will get an error message.
+
+### Stellar Analytics
+Not yet available.  If you call the `historical_supply` function, you will get an error message.
+
+### TRON Analytics
+Not yet available.  If you call the `historical_supply` function, you will get an error message.

@@ -1,11 +1,19 @@
 library(stablecoin)
 
-test_that("Ethereum historical circulation fetches tibble data frame", {
+test_that("Historical supply fetches tibble data frame", {
   skip_on_cran()
-  expect_type(fetch_historical_ethereum(), "list")
+  expect_s4_class(historical_supply(
+                                    network = 'Ethereum',
+                                    token = 'USDC',
+                                    start_time = '2020-01-01',
+                                    end_time = '2021-07-14')
+                            , "data.frame")
 })
 
-test_that("Unsupported metric throws error", {
+test_that("All historical supply enabled tokens fetch", {
   skip_on_cran()
-  expect_error(fetch_historical_ethereum(metric = "DNE"))
+  expect_s4_class(historical_supply_all(
+    start_time = '2020-01-01',
+    end_time = '2021-07-14')
+    , "data.frame")
 })
