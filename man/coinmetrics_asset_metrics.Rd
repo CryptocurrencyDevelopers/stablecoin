@@ -7,13 +7,11 @@
 coinmetrics_asset_metrics(token, metric, start_time, end_time)
 }
 \arguments{
-\item{token}{The stablecoin token}
+\item{token}{A stablecoin token}
 
 \item{start_time}{Start of the time interval}
 
 \item{end_time}{End of the time interval}
-
-\item{network}{The blockchain network}
 }
 \value{
 a dataframe with the results of the query
@@ -22,5 +20,7 @@ a dataframe with the results of the query
 Returns requested metrics for specified assets using Coin Metrics V4 API
 }
 \examples{
+\donttest{
 coinmetrics_asset_metrics(token = 'USDC', metric = 'SplyAct1d', start_time = '2020-01-01', end_time = '2021-07-14')
+}
 }

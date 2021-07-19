@@ -16,10 +16,12 @@
 #' @rdname current_supply
 #'
 #' @examples
+#' \donttest{
 #' current_supply(network = "Ethereum", token = "USDC")
 #' current_supply_all()
 #' current_supply_all("UDSC")
 #' current_supply_all(selected_tokens = c("USDC", "USDT"))
+#' }
 current_supply <- function(network, token) {
   switch (network,
           "Algorand" = current_supply_algorand(token),

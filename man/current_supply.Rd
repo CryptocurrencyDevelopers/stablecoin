@@ -24,8 +24,10 @@ a single blockchain
 or multiple stablecoins on all underlying blockchains
 }
 \examples{
+\donttest{
 current_supply(network = "Ethereum", token = "USDC")
 current_supply_all()
 current_supply_all("UDSC")
 current_supply_all(selected_tokens = c("USDC", "USDT"))
+}
 }

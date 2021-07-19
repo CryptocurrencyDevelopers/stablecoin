@@ -1,7 +1,6 @@
 #' Returns requested metrics for specified assets using Coin Metrics V4 API
 #'
-#' @param network The blockchain network
-#' @param token The stablecoin token
+#' @param token A stablecoin token
 #' @param start_time Start of the time interval
 #' @param end_time End of the time interval
 #'
@@ -10,7 +9,9 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' coinmetrics_asset_metrics(token = 'USDC', metric = 'SplyAct1d', start_time = '2020-01-01', end_time = '2021-07-14')
+#' }
 coinmetrics_asset_metrics <- function(token, metric, start_time, end_time) {
   query <- list(
     assets = token,
@@ -25,20 +26,26 @@ coinmetrics_asset_metrics <- function(token, metric, start_time, end_time) {
                        path = 'v4/timeseries/asset-metrics',
                        query = query)
 
-  t <- r$content$data %>%
-    purrr::map_dfr(unlist) %>%
-    dplyr::rename(
-      token = asset,
-      datetime = `time`,
-      value = metric
-    ) %>%
-    dplyr::mutate(
-      network = 'Ethereum',
-      token = stringr::str_to_upper(token),
-      datetime = lubridate::as_date(datetime),
-      measurement = metric,
-      value = as.numeric(value)
-    )
+  tryCatch({
+    t <- r$content$data %>%
+      purrr::map_dfr(unlist) %>%
+      dplyr::rename(
+        token = `asset`,
+        datetime = `time`,
+        value = `metric`
+      ) %>%
+      dplyr::mutate(
+        token = stringr::str_to_upper(token),
+        datetime = lubridate::as_date(datetime),
+        measurement = metric,
+        value = as.numeric(value)
+      )
+  },
+  error = function(cond) {
+    warning(paste("Failed to manipulate asset metrics for", token))
+    return()
+  }
+  )
   return(t)
 }
 

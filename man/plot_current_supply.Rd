@@ -4,7 +4,7 @@
 \alias{plot_current_supply}
 \title{Plot the current stablecoin supply on supported blockchains}
 \usage{
-plot_current_supply(selected_tokens = NULL)
+plot_current_supply()
 }
 \value{
 a ggplot2 chart showing the current circulating amount of USDC
@@ -14,6 +14,7 @@ Retrieves the supply for \code{selected_tokens} on each supported blockchain and
 then plots the result on a bar chart
 }
 \examples{
+\donttest{
 usdc_plot_current_supply()
-usdc_plot_current_supply("USDC")
+}
 }

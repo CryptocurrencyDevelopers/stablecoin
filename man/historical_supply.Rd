@@ -25,6 +25,8 @@ a dataframe with the historical supply
 Queries the Coin Metrics \code{asset-metrics} endpoint to retrieve historical stablecoin circulation
 }
 \examples{
+\donttest{
 historical_supply(network = 'Ethereum', token = 'USDC', start_time = '2020-01-01', end_time = '2021-07-14')
 historical_supply_all(start_time = '2020-01-01', end_time = '2021-07-14')
+}
 }

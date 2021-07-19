@@ -7,7 +7,7 @@
 #' @param token The stablecoin token
 #' @param start_time Start of the time interval
 #' @param end_time End of the time interval
-
+#'
 #' @rdname historical_supply
 #'
 #' @export
@@ -15,8 +15,10 @@
 #' @return a dataframe with the historical supply
 #'
 #' @examples
+#' \donttest{
 #' historical_supply(network = 'Ethereum', token = 'USDC', start_time = '2020-01-01', end_time = '2021-07-14')
 #' historical_supply_all(start_time = '2020-01-01', end_time = '2021-07-14')
+#' }
 historical_supply <- function(network, token, start_time, end_time) {
   switch(network,
          'Algorand' = historical_supply_algorand(token, start_time, end_time),
@@ -57,13 +59,14 @@ historical_supply_ethereum <- function(token, start_time, end_time) {
          'HUSD' = 'HUSD',
          'GUSD' = 'GUSD',
          'USDK' = 'USDK',
-         'TUSD' = 'TUSD',
          stop(paste('Historical supply for', token, 'not supported on Ethereum'))
          )
 
   df <- coinmetrics_asset_metrics(coinmetrics_token, 'SplyCur', start_time, end_time) %>%
     dplyr::rename(date = datetime, supply = value) %>%
-    dplyr::mutate(token = stablecoin_token) %>%
+    dplyr::mutate(
+      network = "Ethereum",
+      token = stablecoin_token) %>%
     dplyr::select(network, token, date, supply)
   return(df)
 }
@@ -86,7 +89,9 @@ historical_supply_tron <- function(token, start_time, end_time) {
   )
   df <- coinmetrics_asset_metrics(coinmetrics_token, 'SplyCur', start_time, end_time) %>%
     dplyr::rename(date = datetime, supply = value) %>%
-    dplyr::mutate(token = stablecoin_token) %>%
+    dplyr::mutate(
+      network = "TRON",
+      token = stablecoin_token) %>%
     dplyr::select(network, token, date, supply)
   return(df)
 }

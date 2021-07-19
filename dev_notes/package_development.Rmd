@@ -10,41 +10,49 @@ The github repository _pkgdown.yml has the tricks to create good docs
 https://github.com/r-lib/usethis/blob/a40714fba2fa9adf45d3e12f73ffe941eb799423/_pkgdown.yml
 
 ```{r}
-target_network <- 'Ethereum'
-target_token <- 'USDC'
-
-result <- tb %>%
-  filter(network == target_network & token == target_token) %>%
-  pull(token_id)
-
-if(rlang::is_empty(result)) {
-  stop('Token is either not found or supported. Check for typos.')
-}
-
-result
-```
-
-```{r}
-start_time = '2020-01-01'
-end_time = '2021-07-14'
-
-supply <- tokens %>%
-  filter(historical == TRUE) %>%
-  mutate(supply = purrr::map2(network, token, historical_supply, start_time, end_time)) %>%
-  select(supply) %>%
-  unnest(cols = c(supply)) %>%
-  arrange(network, token, date)
-```
-
-
-```{r}
 df <- current_supply_all()
 ```
 
+```{r}
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(ggthemes)
+```
+
 
 ```{r}
-tb <- historical_supply_all(start_time = '2020-01-01', end_time = '2021-07-14')
+df %>%
+  ggplot(aes(x = network, y = current_supply, fill = token)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_y_continuous(labels = dollar_format(scale = 1e-9, accuracy = 1)) +
+  xlab("Blockchain") +
+  ylab("USD Billions") +
+  ggtitle("Current Stablecoin Supply on Major Blockchains") +
+  theme_clean() +
+  theme(legend.position = "none") +
+  facet_wrap(~token, ncol = 2)
 ```
+
+```{r}
+tb <- historical_supply_all(start_time = '2021-01-01', end_time = '2021-07-14')
+```
+
+
+```{r}
+
+tb %>%
+  ggplot(aes(x = date, y = supply, color = network)) +
+  geom_line(stat = "identity") +
+  scale_y_continuous(labels = dollar_format(scale = 1e-6, accuracy = 1)) +
+  xlab("Date") +
+  ylab("USD Millions") +
+  ggtitle("Historical Stablecoin Supply on Selected Blockchains", subtitle = "Jan 2021 - Current") +
+  theme_clean() +
+  facet_wrap(~token, scales = "free", ncol = 2)
+```
+
 
 ```{r}
 library(furrr)
@@ -54,15 +62,33 @@ result <- tokens %>%
     arrange(token, network)
 ```
 
+```{r}
+tryCatch(
+  {
+    supply <- tokens %>%
+      filter(historical == TRUE) %>%
+      mutate(supply = purrr::pwalk(list(network, token, start_time, end_time), historical_supply)) %>%
+      select(supply) %>%
+      unnest(cols = c(supply)) %>%
+      arrange(network, token, date)
+  },
+  error = function(cond) {
+    browser()
+    warning(paste(cond))
+  }
+)
+```
+
 
 ```{r}
-library(ggplot2)
+plot_current_supply()
+```
+```{r}
+df <- historical_supply_all()
+```
 
-tb %>%
-  ggplot(aes(x = network, y = supply, fill = token)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = dollar_format(scale = 1e-9, accuracy = 1)) +
-  xlab("\nBlockchain") +
-  ylab("USD Billions\n")
+
+```{r}
+plot_historical_supply(start_time = '2021-01-01', end_time = '2021-07-18')
 ```
 

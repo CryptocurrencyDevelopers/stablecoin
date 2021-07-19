@@ -4,7 +4,12 @@
 \alias{plot_historical_supply}
 \title{Plot historical stablecoin supply on Ethereum}
 \usage{
-plot_historical_supply(networks, tokens, start_time, end_time)
+plot_historical_supply(start_time, end_time)
+}
+\arguments{
+\item{start_time}{Start of the time interval}
+
+\item{end_time}{End of the time interval}
 }
 \value{
 a ggplot2 chart showing the historical circulating amount of USDC on Ethereum
@@ -14,6 +19,7 @@ Retrieves the supply for \code{selected_tokens} on each supported blockchain and
 then plots the result on a bar chart
 }
 \examples{
-
-usdc_plot_historical_supply()
+\donttest{
+usdc_plot_historical_supply(start_time = '2020-01-01', end_time = '2021-07-18')
+}
 }
